@@ -36,7 +36,7 @@
     <platform name="android">
 <!-- cranberrygame start-->	
 		<dependency id="android.support.v4@1.0.0" />
-		<!-- removed C:\Users\win\com.cranberrygame.cordova.plugin.facebook_1.0.0\platforms\android\FacebookLib\libs\android-support-v4.jar -->
+		<!-- //removed C:\Users\win\com.cranberrygame.cordova.plugin.facebook_1.0.0\platforms\android\FacebookLib\libs\android-support-v4.jar -->
 <!-- cranberrygame end-->	
 	
         <config-file target="res/xml/config.xml" parent="/*">
