@@ -358,11 +358,6 @@ public class ConnectPlugin extends CordovaPlugin {
             callbackContext.success();
             return true;
         } else if (action.equals("showDialog")) {
-            Session session = Session.getActiveSession();
-            if (!checkActiveSession(session)) {
-                callbackContext.error("No active session");
-                return true;
-            }
             Bundle collect = new Bundle();
             JSONObject params = null;
             try {
@@ -391,6 +386,22 @@ public class ConnectPlugin extends CordovaPlugin {
                 }
             }
             this.paramBundle = new Bundle(collect);
+            
+            //The Share dialog prompts a person to publish an individual story or an Open Graph story to their timeline.
+            //This does not require Facebook Login or any extended permissions, so it is the easiest way to enable sharing on web.
+            boolean isShareDialog = this.method.equalsIgnoreCase("share") || this.method.equalsIgnoreCase("share_open_graph");
+            //If is a Share dialog but FB app is not installed the WebDialog Builder fails. 
+            //In Android all WebDialogs require a not null Session object.
+            boolean canPresentShareDialog = isShareDialog && (FacebookDialog.canPresentShareDialog(me.cordova.getActivity(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG));
+            //Must be an active session when is not a Shared dialog or if the Share dialog cannot be presented.
+            boolean requiresAnActiveSession = (!isShareDialog) || (!canPresentShareDialog);
+            if (requiresAnActiveSession) {
+                Session session = Session.getActiveSession();
+                if (!checkActiveSession(session)) {
+                    callbackContext.error("No active session");
+                    return true;
+                }
+            }
 
             // Begin by sending a callback pending notice to Cordova
             showDialogContext = callbackContext;
@@ -428,8 +439,8 @@ public class ConnectPlugin extends CordovaPlugin {
                     }
                 };
                 cordova.getActivity().runOnUiThread(runnable);
-            } else if (this.method.equalsIgnoreCase("share") || this.method.equalsIgnoreCase("share_open_graph")) {
-                if (FacebookDialog.canPresentShareDialog(me.cordova.getActivity(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+            } else if (isShareDialog) {
+                if (canPresentShareDialog) {
                     Runnable runnable = new Runnable() {
                         public void run() {
                             // Publish the post using the Share Dialog
@@ -453,8 +464,37 @@ public class ConnectPlugin extends CordovaPlugin {
                             feedDialog.show();
                         }
                     };
-                cordova.getActivity().runOnUiThread(runnable);
+                    cordova.getActivity().runOnUiThread(runnable);
                 }
+            } else if (this.method.equalsIgnoreCase("send")) {
+                Runnable runnable = new Runnable() {
+                    public void run() {
+                        FacebookDialog.MessageDialogBuilder builder = new FacebookDialog.MessageDialogBuilder(me.cordova.getActivity());
+                        if(paramBundle.containsKey("link"))
+                            builder.setLink(paramBundle.getString("link"));
+                        if(paramBundle.containsKey("caption"))
+                            builder.setCaption(paramBundle.getString("caption"));
+                        if(paramBundle.containsKey("name"))
+                            builder.setName(paramBundle.getString("name"));
+                        if(paramBundle.containsKey("picture"))
+                            builder.setPicture(paramBundle.getString("picture"));
+                        if(paramBundle.containsKey("description"))
+                            builder.setDescription(paramBundle.getString("description"));
+                        // Check for native FB Messenger application
+                        if (builder.canPresent()) {
+                            FacebookDialog dialog = builder.build();
+                            dialog.present();
+                        }  else {
+                            // Not found
+                            trackingPendingCall = false;
+                            String errMsg = "Messaging unavailable.";
+                            Log.e(TAG, errMsg);
+                            showDialogContext.error(errMsg);
+                        }
+                    };
+                };
+                this.trackingPendingCall = true;
+                cordova.getActivity().runOnUiThread(runnable);
             } else {
                 callbackContext.error("Unsupported dialog method.");
             }
@@ -606,13 +646,14 @@ public class ConnectPlugin extends CordovaPlugin {
         };
 
         //If you're using the paging URLs they will be URLEncoded, let's decode them.
+		String[] urlParts = graphPath.split("\\?");//cranberrygame
         try {
-            graphPath = URLDecoder.decode(graphPath, "UTF-8");
+            urlParts[0] = URLDecoder.decode(urlParts[0], "UTF-8");//cranberrygame
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        String[] urlParts = graphPath.split("\\?");
+        //String[] urlParts = graphPath.split("\\?");//cranberrygame
         String graphAction = urlParts[0];
         Request graphRequest = Request.newGraphPathRequest(null, graphAction, graphCallback);
         Bundle params = graphRequest.getParameters();
@@ -625,6 +666,15 @@ public class ConnectPlugin extends CordovaPlugin {
                 if (splitPoint > 0) {
                     String key = query.substring(0, splitPoint);
                     String value = query.substring(splitPoint + 1, query.length());
+//cranberrygame start					
+					try {
+						key = URLDecoder.decode(key, "UTF-8");
+						value = URLDecoder.decode(value, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}					
+//cranberrygame start
+
                     params.putString(key, value);
                 }
             }

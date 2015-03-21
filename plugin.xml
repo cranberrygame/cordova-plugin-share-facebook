@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="com.phonegap.plugins.facebookconnect"
-        version="0.10.1">
+        id="com.cranberrygame.cordova.plugin.facebook"
+        version="0.11.0">
 
     <name>Facebook Connect</name>
 
@@ -26,7 +26,7 @@
     </engines>
 
     <!-- JavaScript interface -->
-    <js-module src="www/phonegap/plugin/facebookConnectPlugin/facebookConnectPlugin.js"
+    <js-module src="facebookConnectPlugin.js"
                name="FacebookConnectPlugin"
                target="phonegap/plugin/facebookConnectPlugin/facebookConnectPlugin.js">
         <clobbers target="facebookConnectPlugin" />
@@ -34,6 +34,10 @@
 
     <!-- android -->
     <platform name="android">
+<!-- cranberrygame start-->	
+		<!--dependency id="android.support.v4@1.0.0" /-->
+		<dependency id="android.support.v4" url="https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.dummy.android.support.v4" commit="b5e33725e6e5622cafa72b35011fe5496f11d104" />
+<!-- cranberrygame end-->
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FacebookConnectPlugin">
@@ -66,6 +70,12 @@
 
     <!-- ios -->
     <platform name="ios">
+<!-- cranberrygame start-->	
+		<!--dependency id="com.phonegap.plugins.facebookconnect" /-->
+		<dependency id="com.phonegap.plugins.facebookconnect" url="https://github.com/Wizcorp/phonegap-facebook-plugin" commit="d8b0f6935a7c6e586188bf85f9da88a1c160790b" />
+<!-- cranberrygame end-->
+	
+<!--	
         <config-file target="config.xml" parent="/*">
             <feature name="FacebookConnectPlugin">
                 <param name="ios-package" value="FacebookConnectPlugin"/>
@@ -100,15 +110,34 @@
             </dict>
           </array>
         </config-file>
-
+-->
         <!-- Facebook framework -->
+<!--		
         <framework src="platforms/ios/FacebookSDK.framework" custom="true" />
+-->		
 
         <!-- System frameworks -->
+<!--		
         <framework src="libsqlite3.dylib" />
         <framework src="Social.framework" weak="true" />
         <framework src="Accounts.framework" weak="true" />
         <framework src="Security.framework" weak="true" />
+-->
+    </platform>
 
+    <!-- browser -->
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <feature name="FacebookConnectPlugin">
+                <param name="browser-package" value="FacebookConnectPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+            <plugin name="FacebookConnectPlugin" value="FacebookConnectPlugin"/>
+            <access origin="https://m.facebook.com" />
+            <access origin="https://graph.facebook.com" />
+            <access origin="https://api.facebook.com" />
+            <access origin="https://*.fbcdn.net" />
+            <access origin="https://*.akamaihd.net" />
+        </config-file>
     </platform>
 </plugin>
