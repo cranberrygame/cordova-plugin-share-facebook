@@ -683,31 +683,15 @@ public class LikeActionController {
         return new FacebookDialog.Callback() {
             @Override
             public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-                if (data == null || !data.containsKey(LIKE_DIALOG_RESPONSE_OBJECT_IS_LIKED_KEY)) {
-                    // This is an empty result that we can't handle.
+                if (!data.containsKey(LIKE_DIALOG_RESPONSE_OBJECT_IS_LIKED_KEY)) {
+                    // This is an empty result that we can't handle. Don't lose like state.
                     return;
                 }
 
                 boolean isObjectLiked = data.getBoolean(LIKE_DIALOG_RESPONSE_OBJECT_IS_LIKED_KEY);
-
-                // Default to known/cached state, if properties are missing.
-                String likeCountStringWithLike = LikeActionController.this.likeCountStringWithLike;
-                String likeCountStringWithoutLike = LikeActionController.this.likeCountStringWithoutLike;
-                if (data.containsKey(LIKE_DIALOG_RESPONSE_LIKE_COUNT_STRING_KEY)) {
-                    likeCountStringWithLike = data.getString(LIKE_DIALOG_RESPONSE_LIKE_COUNT_STRING_KEY);
-                    likeCountStringWithoutLike = likeCountStringWithLike;
-                }
-
-                String socialSentenceWithLike = LikeActionController.this.socialSentenceWithLike;
-                String socialSentenceWithoutWithoutLike = LikeActionController.this.socialSentenceWithoutLike;
-                if (data.containsKey(LIKE_DIALOG_RESPONSE_SOCIAL_SENTENCE_KEY)) {
-                    socialSentenceWithLike = data.getString(LIKE_DIALOG_RESPONSE_SOCIAL_SENTENCE_KEY);
-                    socialSentenceWithoutWithoutLike = socialSentenceWithLike;
-                }
-
-                String unlikeToken = data.containsKey(LIKE_DIALOG_RESPONSE_OBJECT_IS_LIKED_KEY)
-                        ? data.getString(LIKE_DIALOG_RESPONSE_UNLIKE_TOKEN_KEY)
-                        : LikeActionController.this.unlikeToken;
+                String likeCountString = data.getString(LIKE_DIALOG_RESPONSE_LIKE_COUNT_STRING_KEY);
+                String socialSentence = data.getString(LIKE_DIALOG_RESPONSE_SOCIAL_SENTENCE_KEY);
+                String unlikeToken = data.getString(LIKE_DIALOG_RESPONSE_UNLIKE_TOKEN_KEY);
 
                 Bundle logParams = (analyticsParameters == null) ? new Bundle() : analyticsParameters;
                 logParams.putString(AnalyticsEvents.PARAMETER_CALL_ID, pendingCall.getCallId().toString());
@@ -715,10 +699,10 @@ public class LikeActionController {
 
                 updateState(
                         isObjectLiked,
-                        likeCountStringWithLike,
-                        likeCountStringWithoutLike,
-                        socialSentenceWithLike,
-                        socialSentenceWithoutWithoutLike,
+                        likeCountString,
+                        likeCountString,
+                        socialSentence,
+                        socialSentence,
                         unlikeToken);
             }
 
@@ -934,37 +918,17 @@ public class LikeActionController {
         LikeStatusClient.CompletedListener callback = new LikeStatusClient.CompletedListener() {
             @Override
             public void completed(Bundle result) {
-                // Don't lose old state if the service response is incomplete.
                 if (result == null || !result.containsKey(NativeProtocol.EXTRA_OBJECT_IS_LIKED)) {
+                    // Don't lose old state if the service response is incomplete.
                     return;
                 }
 
                 boolean objectIsLiked = result.getBoolean(NativeProtocol.EXTRA_OBJECT_IS_LIKED);
-
-                String likeCountWithLike =
-                        result.containsKey(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITH_LIKE)
-                                ? result.getString(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITH_LIKE)
-                                : LikeActionController.this.likeCountStringWithLike;
-
-                String likeCountWithoutLike =
-                        result.containsKey(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITHOUT_LIKE)
-                                ? result.getString(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITHOUT_LIKE)
-                                : LikeActionController.this.likeCountStringWithoutLike;
-
-                String socialSentenceWithLike =
-                        result.containsKey(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITH_LIKE)
-                                ? result.getString(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITH_LIKE)
-                                : LikeActionController.this.socialSentenceWithLike;
-
-                String socialSentenceWithoutLike =
-                        result.containsKey(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITHOUT_LIKE)
-                                ? result.getString(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITHOUT_LIKE)
-                                : LikeActionController.this.socialSentenceWithoutLike;
-
-                String unlikeToken =
-                        result.containsKey(NativeProtocol.EXTRA_UNLIKE_TOKEN)
-                                ? result.getString(NativeProtocol.EXTRA_UNLIKE_TOKEN)
-                                : LikeActionController.this.unlikeToken;
+                String likeCountWithLike = result.getString(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITH_LIKE);
+                String likeCountWithoutLike = result.getString(NativeProtocol.EXTRA_LIKE_COUNT_STRING_WITHOUT_LIKE);
+                String socialSentenceWithLike = result.getString(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITH_LIKE);
+                String socialSentenceWithoutLike = result.getString(NativeProtocol.EXTRA_SOCIAL_SENTENCE_WITHOUT_LIKE);
+                String unlikeToken = result.getString(NativeProtocol.EXTRA_UNLIKE_TOKEN);
 
                 updateState(
                         objectIsLiked,
@@ -1198,9 +1162,7 @@ public class LikeActionController {
     }
 
     private class GetOGObjectLikesRequestWrapper extends AbstractRequestWrapper {
-        // Initialize the like status to what we currently have. This way, empty/error responses don't end
-        // up clearing out the state.
-        boolean objectIsLiked = LikeActionController.this.isObjectLiked;
+        boolean objectIsLiked;
         String unlikeToken;
 
         GetOGObjectLikesRequestWrapper(String objectId) {
@@ -1242,12 +1204,10 @@ public class LikeActionController {
     }
 
     private class GetEngagementRequestWrapper extends AbstractRequestWrapper {
-        // Initialize the like status to what we currently have. This way, empty/error responses don't end
-        // up clearing out the state.
-        String likeCountStringWithLike = LikeActionController.this.likeCountStringWithLike;
-        String likeCountStringWithoutLike = LikeActionController.this.likeCountStringWithoutLike;
-        String socialSentenceStringWithLike = LikeActionController.this.socialSentenceWithLike;
-        String socialSentenceStringWithoutLike = LikeActionController.this.socialSentenceWithoutLike;
+        String likeCountStringWithLike;
+        String likeCountStringWithoutLike;
+        String socialSentenceStringWithLike;
+        String socialSentenceStringWithoutLike;
 
         GetEngagementRequestWrapper(String objectId) {
             super(objectId);
@@ -1268,18 +1228,10 @@ public class LikeActionController {
         protected void processSuccess(Response response) {
             JSONObject engagementResults = Utility.tryGetJSONObjectFromResponse(response.getGraphObject(), "engagement");
             if (engagementResults != null) {
-                // Missing properties in the response should default to cached like status
-                likeCountStringWithLike =
-                        engagementResults.optString("count_string_with_like", likeCountStringWithLike);
-
-                likeCountStringWithoutLike =
-                        engagementResults.optString("count_string_without_like", likeCountStringWithoutLike);
-
-                socialSentenceStringWithLike =
-                        engagementResults.optString("social_sentence_with_like", socialSentenceStringWithLike);
-
-                socialSentenceStringWithoutLike =
-                        engagementResults.optString("social_sentence_without_like", socialSentenceStringWithoutLike);
+                likeCountStringWithLike = engagementResults.optString("count_string_with_like");
+                likeCountStringWithoutLike = engagementResults.optString("count_string_without_like");
+                socialSentenceStringWithLike = engagementResults.optString("social_sentence_with_like");
+                socialSentenceStringWithoutLike = engagementResults.optString("social_sentence_without_like");
             }
         }
 

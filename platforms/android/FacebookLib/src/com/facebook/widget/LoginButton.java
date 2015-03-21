@@ -19,7 +19,6 @@ package com.facebook.widget;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -844,11 +843,6 @@ public class LoginButton extends Button {
                         openRequest = new Session.OpenRequest(parentFragment);
                     } else if (context instanceof Activity) {
                         openRequest = new Session.OpenRequest((Activity)context);
-                    } else if (context instanceof ContextWrapper) {
-                        Context baseContext = ((ContextWrapper)context).getBaseContext();
-                        if (baseContext instanceof Activity) {
-                            openRequest = new Session.OpenRequest((Activity)baseContext);
-                        }
                     }
 
                     if (openRequest != null) {

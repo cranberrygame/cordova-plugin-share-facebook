@@ -446,22 +446,18 @@ public final class Settings {
      * @return returns null if the facebook app is not present on the phone.
      */
     public static String getAttributionId(ContentResolver contentResolver) {
-        Cursor c = null;
         try {
             String [] projection = {ATTRIBUTION_ID_COLUMN_NAME};
-            c = contentResolver.query(ATTRIBUTION_ID_CONTENT_URI, projection, null, null, null);
+            Cursor c = contentResolver.query(ATTRIBUTION_ID_CONTENT_URI, projection, null, null, null);
             if (c == null || !c.moveToFirst()) {
                 return null;
             }
             String attributionId = c.getString(c.getColumnIndex(ATTRIBUTION_ID_COLUMN_NAME));
+            c.close();
             return attributionId;
         } catch (Exception e) {
             Log.d(TAG, "Caught unexpected exception in getAttributionId(): " + e.toString());
             return null;
-        } finally {
-            if (c != null) {
-                c.close();
-            }
         }
     }
 
