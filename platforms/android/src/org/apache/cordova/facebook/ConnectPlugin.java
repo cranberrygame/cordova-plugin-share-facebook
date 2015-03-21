@@ -606,14 +606,13 @@ public class ConnectPlugin extends CordovaPlugin {
         };
 
         //If you're using the paging URLs they will be URLEncoded, let's decode them.
-		String[] urlParts = graphPath.split("\\?");//cranberrygame
         try {
-            urlParts[0] = URLDecoder.decode(urlParts[0], "UTF-8");//cranberrygame
+            graphPath = URLDecoder.decode(graphPath, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        //String[] urlParts = graphPath.split("\\?");//cranberrygame
+        String[] urlParts = graphPath.split("\\?");
         String graphAction = urlParts[0];
         Request graphRequest = Request.newGraphPathRequest(null, graphAction, graphCallback);
         Bundle params = graphRequest.getParameters();
@@ -626,15 +625,6 @@ public class ConnectPlugin extends CordovaPlugin {
                 if (splitPoint > 0) {
                     String key = query.substring(0, splitPoint);
                     String value = query.substring(splitPoint + 1, query.length());
-//cranberrygame start					
-					try {
-						key = URLDecoder.decode(key, "UTF-8");
-						value = URLDecoder.decode(value, "UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}					
-//cranberrygame start
-
                     params.putString(key, value);
                 }
             }
@@ -642,7 +632,7 @@ public class ConnectPlugin extends CordovaPlugin {
         params.putString("access_token", session.getAccessToken());
 
         graphRequest.setParameters(params);
-        graphRequest.executeAsync();		
+        graphRequest.executeAsync();
     }
 
     /*
