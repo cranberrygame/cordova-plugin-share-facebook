@@ -44,6 +44,28 @@ import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 
+//cranberrygame start
+import android.app.Activity;
+//Util
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+class Util {
+	//ex) Util.alert(cordova.getActivity(),"message");
+	public static void alert(Activity activity, String message) {
+		AlertDialog ad = new AlertDialog.Builder(activity).create();  
+		ad.setCancelable(false); // This blocks the 'BACK' button  
+		ad.setMessage(message);  
+		ad.setButton("OK", new DialogInterface.OnClickListener() {  
+			@Override  
+			public void onClick(DialogInterface dialog, int which) {  
+				dialog.dismiss();                      
+			}  
+		});  
+		ad.show(); 		
+	}	
+}
+//cranberrygame end
+
 public class ConnectPlugin extends CordovaPlugin {
 
     private static final int INVALID_ERROR_CODE = -2; //-1 is FacebookRequestError.INVALID_ERROR_CODE
@@ -674,7 +696,7 @@ public class ConnectPlugin extends CordovaPlugin {
 						e.printStackTrace();
 					}					
 //cranberrygame start
-
+					//Util.alert(cordova.getActivity(), String.format("%s: %s", key, value));//cranberrygame
                     params.putString(key, value);
                 }
             }
