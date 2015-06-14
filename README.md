@@ -225,7 +225,7 @@ window.facebook.Is showing leaderboard
 */
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.share-facebook/blob/master/example/index.html">example/index.html</a>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.share-facebook/blob/master/example/basic/index.html">example/basic/index.html</a>
 
 # Test #
 
