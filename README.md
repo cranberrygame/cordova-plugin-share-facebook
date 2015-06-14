@@ -1,251 +1,242 @@
-# Apache Cordova Facebook Plugin
+Cordova Facebook plugin
+====================
 
-This is the official plugin for Facebook in Apache Cordova/PhoneGap!
+# Overview #
+facebook login, prompt wall post, publish wall post, publish score, show leaderboard and invite.
 
-The Facebook plugin for [Apache Cordova](http://incubator.apache.org/cordova/) allows you to use the same JavaScript code in your Cordova application as you use in your web application. However, unlike in the browser, the Cordova application will use the native Facebook app to perform Single Sign On for the user.  If this is not possible then the sign on will degrade gracefully using the standard dialog based authentication.
+[android, ios] [crodova cli] [xdk] [cocoon]
 
-* Supported on PhoneGap (Cordova) v3.5.0 and above.
-* This plugin is built for
-	* iOS FacebookSDK 3.21.1
-	* Android FacebookSDK 3.21.1
-* GitHub URL : [https://github.com/Wizcorp/phonegap-facebook-plugin/](https://github.com/Wizcorp/phonegap-facebook-plugin/)
+Requires facebook developer account https://developers.facebook.com/apps
 
-## << --- Cordova Registry Warning [iOS]
+This is open source cordova plugin.
 
-****Installing this plugin directly from Cordova Registry results in Xcode using a broken `FacebookSDK.framework`, this is because the current publish procedure to NPM breaks symlinks [CB-6092](https://issues.apache.org/jira/browse/CB-6092). Please install the plugin through a locally cloned copy or re-add the `FacebookSDK.framework` to Xcode after installation.****
-
-## ------------------------------------------ >>
-
-------------------------------------------
-
-## Facebook Requirements and Set-Up
-
-To use this plugin you will need to make sure you've registered your Facebook app with Facebook and have an `APP_ID` [https://developers.facebook.com/apps](https://developers.facebook.com/apps).
-
-#### Install Guides
-
-- [iOS Guide](platforms/ios/README.md)
-
-- [Android Guide](platforms/android/README.md)
-
-- [Browser Guide](platforms/browser/README.md)
-
-- [PhoneGap Build Guide](platforms/pg-build/README.md)
-
-- [Troubleshooting Guide | F.A.Q.](TROUBLESHOOTING.md)
-
-
-#### Example Apps
-
-`platforms/android` and `platforms/ios` contain example projects and all the native code for the plugin for both Android and iOS platforms. They also include versions of the Android and iOS Facebook SDKs. These are used during automatic installation.
-
-## API
-
-### Login
-
-`facebookConnectPlugin.login(Array strings of permissions, Function success, Function failure)`
-
-**NOTE** : Developers should call `facebookConnectPlugin.browserInit(<appId>)` before login - **Web App ONLY** (see [Web App Guide](platforms/web/README.md))
-
-Success function returns an Object like:
-
-	{
-		status: "connected",
-		authResponse: {
-			session_key: true,
-			accessToken: "<long string>",
-			expiresIn: 5183979,
-			sig: "...",
-			secret: "...",
-			userID: "634565435"
-		}
-	}
-
-Failure function returns an error String.
-
-### Logout
-
-`facebookConnectPlugin.logout(Function success, Function failure)`
-
-### Get Status
-
-`facebookConnectPlugin.getLoginStatus(Function success, Function failure)`
-
-Success function returns an Object like:
-
+You can see Plugins For Cordova in one page: http://cranberrygame.github.io?referrer=github
+```c
 ```
-{
-	authResponse: {
-		userID: "12345678912345",
-		accessToken: "kgkh3g42kh4g23kh4g2kh34g2kg4k2h4gkh3g4k2h4gk23h4gk2h34gk234gk2h34AndSoOn",
-		session_Key: true,
-		expiresIn: "5183738",
-		sig: "..."
-	},
-	status: "connected"
-}
+# Change log #
+```c
 ```
-For more information see: [Facebook Documentation](https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus)
+# Install plugin #
 
-### Show a Dialog
+## Cordova cli ##
+https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@5.0.0
+```c
+//caution: replace 1388298811491111 with your app id and Avoid Bird with your app name
+cordova plugin add cordova-plugin-share-facebook --variable APP_ID="1388298811491111" --variable APP_NAME="Avoid Bird"
+```
+## Xdk ##
+//caution: replace 1388298811491111 with your app id and Avoid Bird with your app name
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/xdk_APP_ID.png"><br>
+https://github.com/cranberrygame/cordova-plugin-share-facebook/blob/master/doc/intelxdk.config.additions.xml
+```c
+```
 
-`facebookConnectPlugin.showDialog(Object options, Function success, Function failure)`
+## Cocoon ##
+https://cocoon.io - Create project - [specific project] - Setting - Plugins - Custom - Git Url: https://github.com/cranberrygame/cordova-plugin-share-facebook.git - INSTALL - Save<br>
+//caution: replace 1388298811491111 with your app id and Avoid Bird with your app name<br>
+https://cocoon.io - Create project - [specific project] - Setting - Plugins - Installed - Git Url https://github.com/cranberrygame/cordova-plugin-share-facebook.git - ADD PARAMETER - Name: APP_ID Value: 1388298811491111 - Name: APP_NAME Value: Avoid Bird - Save<br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/cocoon_APP_ID1.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/cocoon_APP_ID2.png">
 
-Example options -
-Feed Dialog:
+## Phonegap build service (config.xml) ##
+https://build.phonegap.com/ - Apps - [specific project] - Update code - Zip file including config.xml
+```c
+//caution: replace 1388298811491111 with your app id and Avoid Bird with your app name
+<gap:plugin name="cordova-plugin-share-facebook" source="npm" >
+    <param name="APP_ID" value="1388298811491111" />
+    <param name="APP_NAME" value="Avoid Bird" />
+</gap:plugin>
+```
 
-	{
-		method: "feed",
-		link: "http://example.com",
-		caption: "Such caption, very feed."
-	}
+## Construct2 ##
+Download construct2 plugin: http://www.paywithapost.de/pay?id=4ef3f2be-26e8-4a04-b826-6680db13a8c8
+<br>
+Now all the native plugins are installed automatically: https://plus.google.com/102658703990850475314/posts/XS5jjEApJYV
+<br>
+You can also use this plugin's AccessToken with lanceal's various facebook related plugins: https://www.scirra.com/forum/facebook_t111941
+# Server setting #
 
-App request:
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-1.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-2.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-3.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-4.png"><br>
+https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-4.txt
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-5.png"><br>
+https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_1-5.txt
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_2-1.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_ios1.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_ios2.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/APP_ID_ios3.png">
 
-	{
-		method: "apprequests",
-		message: "Come on man, check out my application."
-	}
+```c
+[android]
 
-For options information see: [Facebook feed dialog documentation](https://developers.facebook.com/docs/sharing/reference/feed-dialog/v2.0), [Facebook share dialog documentation](https://developers.facebook.com/docs/sharing/reference/share-dialog)
+https://developers.facebook.com/apps - Add a New App - ... - Skip Quick Start
 
-Success function returns an Object with `postId` as String or `from` and `to` information when doing `apprequest`.
-Failure function returns an error String.
+Put your app id and your app name to Phonegap Facebook plugin's c2 property.
 
-### The Graph API
+cf)How to get Key Hashes (facebook)
 
-`facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)`
+cd /d D:\sign\android
+keytool -list -v -keystore mykey.keystore -alias mykeystore
 
-Allows access to the Facebook Graph API. This API allows for additional permission because, unlike login, the Graph API can accept multiple permissions.
+SHA1: 90:2F:37:48:~~~~~~:09:2D:61:52:E6
 
-Example permissions:
+convert upper SHA1 to base64 string for facebook from following site.
+http://tomeko.net/online_tools/hex_to_base64.php?lang=en
 
-	["public_profile", "user_birthday"]
+==> Key Hashes: kC83~~~~~~~~~1hUuY=
+```
+# API #
+```javascript
+preparing api
+/*
+//
+var leaderboardId = "REPLACE_THIS_WITH_YOUR_LEADERBOARD_ID";
+var achievementId1 = "REPLACE_THIS_WITH_YOUR_ACHIEVEMENT_ID1";
+var achievementId2 = "REPLACE_THIS_WITH_YOUR_ACHIEVEMENT_ID2";
+var achievementId3 = "REPLACE_THIS_WITH_YOUR_ACHIEVEMENT_ID3";
+var achievementId4 = "REPLACE_THIS_WITH_YOUR_ACHIEVEMENT_ID4";
 
-Success function returns an Object.
+//
+document.addEventListener("deviceready", function(){
+	window.game.setUp();
 
-Failure function returns an error String.
-
-**Note: "In order to make calls to the Graph API on behalf of a user, the user has to be logged into your app using Facebook login."**
-
-For more information see:
-
-- Calling the Graph API - [https://developers.facebook.com/docs/ios/graph](https://developers.facebook.com/docs/ios/graph)
-- Graph Explorer - [https://developers.facebook.com/tools/explorer](https://developers.facebook.com/tools/explorer)
-- Graph API - [https://developers.facebook.com/docs/graph-api/](https://developers.facebook.com/docs/graph-api/)
-
-# Events
-
-App events allow you to understand the makeup of users engaging with your app, measure the performance of your Facebook mobile app ads, and reach specific sets of your users with Facebook mobile app ads.
-
-- [iOS] [https://developers.facebook.com/docs/ios/app-events](https://developers.facebook.com/docs/ios/app-events)
-- [Android] [https://developers.facebook.com/docs/android/app-events](https://developers.facebook.com/docs/android/app-events)
-- [JS] Does not have an Events API, so the plugin functions are empty and will return an automatic success
-
-Activation events are automatically tracked for you in the plugin.
-
-Events are listed on the [insights page](https://www.facebook.com/insights/)
-
-### Log an Event
-
-`logEvent(String name, Object params, Number valueToSum, Function success, Function failure)`
-
-- **name**, name of the event
-- **params**, extra data to log with the event (is optional)
-- **valueToSum**, a property which is an arbitrary number that can represent any value (e.g., a price or a quantity). When reported, all of the valueToSum properties will be summed together. For example, if 10 people each purchased one item that cost $10 (and passed in valueToSum) then they would be summed to report a number of $100. (is optional)
-
-### Log a Purchase
-
-`logPurchase(Number value, String currency, Function success, Function failure)`
-
-**NOTE:** Both parameters are required. The currency specification is expected to be an [ISO 4217 currency code](http://en.wikipedia.org/wiki/ISO_4217)
-
-## Sample Code
-
-### Login
-
-In your `onDeviceReady` event add the following
-
-	var fbLoginSuccess = function (userData) {
-		alert("UserInfo: " + JSON.stringify(userData));
-	}
-
-	facebookConnectPlugin.login(["public_profile"],
-        fbLoginSuccess,
-        function (error) { alert("" + error) }
-    );
-
-### Get Access Token
-
-If you need the Facebook access token (for example, for validating the login on server side), do:
-
-	var fbLoginSuccess = function (userData) {
-		alert("UserInfo: " + JSON.stringify(userData));
-		facebookConnectPlugin.getAccessToken(function(token) {
-			alert("Token: " + token);
-		}, function(err) {
-			alert("Could not get access token: " + err);
-		});
-	}
-
-	facebookConnectPlugin.login(["public_profile"],
-        fbLoginSuccess,
-        function (error) { alert("" + error) }
-    );
-
-### Get Status and Post-to-wall
-
-For a more instructive example change the above `fbLoginSuccess` to;
-
-	var fbLoginSuccess = function (userData) {
-		alert("UserInfo: " + JSON.stringify(userData));
-    	facebookConnectPlugin.getLoginStatus(
-    		function (status) {
-    			alert("current status: " + JSON.stringify(status));
-
-    			var options = { method:"feed" };
-    			facebookConnectPlugin.showDialog(options,
-    				function (result) {
-        				alert("Posted. " + JSON.stringify(result));				},
-        		function (e) {
-    				alert("Failed: " + e);
-    			});
-    		}
-    	);
+	//callback
+	window.game.onLoginSucceeded = function(result) {
+		var playerDetail = result;
+        alert('onLoginSucceeded: ' + playerDetail['playerId'] + ' ' + playerDetail['playerDisplayName']);
+    };	
+    window.game.onLoginFailed = function() {
+        alert('onLoginFailed');
     };
+    window.game.onGetPlayerImageSucceeded = function(result) {
+		var playerImageUrl = result;
+        alert('onGetPlayerImageSucceeded: ' + playerImageUrl);
+    };
+    window.game.onGetPlayerImageFailed = function() {
+        alert('onGetPlayerImageFailed');
+    };	
+    window.game.onGetPlayerScoreSucceeded = function(result) {
+		var playerScore = result;
+        alert('onGetPlayerScoreSucceeded: ' + playerScore);
+    };
+    window.game.onGetPlayerScoreFailed = function() {
+        alert('onGetPlayerScoreFailed');
+    };
+	//	
+    window.game.onSubmitScoreSucceeded = function() {
+        alert('onSubmitScoreSucceeded');
+    };	
+    window.game.onSubmitScoreFailed = function() {
+        alert('onSubmitScoreFailed');
+    };	
+	//	
+    window.game.onUnlockAchievementSucceeded = function() {
+        alert('onUnlockAchievementSucceeded');
+    };  
+    window.game.onUnlockAchievementFailed = function() {
+        alert('onUnlockAchievementFailed');
+    };
+    window.game.onIncrementAchievementSucceeded = function() {
+        alert('onIncrementAchievementSucceeded');
+    };  
+    window.game.onIncrementAchievementFailed = function() {
+        alert('onIncrementAchievementFailed');
+    };
+    window.game.onResetAchievementsSucceeded = function() {
+        alert('onResetAchievementsSucceeded');
+    };	
+    window.game.onResetAchievementsFailed = function() {
+        alert('onResetAchievementsFailed');
+    };
+//events
+window.facebook.On login succeeded
+window.facebook.On login failed
+window.facebook.On logout succeeded
+window.facebook.On logout failed
+window.facebook.On check permissions succeeded
+window.facebook.On check permissions failed
+window.facebook.On request permissions succeeded
+window.facebook.On request permissions failed
+window.facebook.On prompt wall post succeeded
+window.facebook.On prompt wall post failed
+window.facebook.On prompt wall post link succeeded
+window.facebook.On prompt wall post link failed
+window.facebook.On prompt wall post link this app succeeded
+window.facebook.On prompt wall post link this app failed
+window.facebook.On publish wall post succeeded
+window.facebook.On publish wall post failed
+window.facebook.On publish wall post link succeeded
+window.facebook.On publish wall post link failed
+window.facebook.On publish wall post link this app succeeded
+window.facebook.On publish wall post link this app failed
+window.facebook.On publish score succeeded
+window.facebook.On publish score failed
+window.facebook.On request high score succeeded
+window.facebook.On request high score failed
+window.facebook.On invite succeeded
+window.facebook.On invite failed
+	
+}, false);
 
-### Getting a User's Birthday
+//
+window.game.login();
+window.game.logout();
+alert(window.game.isLoggedIn());
+window.game.getPlayerImage();
+window.game.getPlayerScore(leaderboardId);
+//actions
+window.facebook.Login
+window.facebook.Logout
+window.facebook.Check permissions: (publish_actions: need to be reviewed by facebook)
+window.facebook.Request permissions: (publish_actions: need to be reviewed by facebook)
+window.facebook.Prompt wall post
+window.facebook.Prompt wall post link
+window.facebook.Prompt wall post link this app
+window.facebook.Publish wall post: (publish_actions)
+window.facebook.Publish wall post link: (publish_actions)
+window.facebook.Publish wall post link this app: (publish_actions)
+window.facebook.Publish score: (publish_actions)
+window.facebook.Show leaderboard: (publish_actions)
+window.facebook.Hide leaderboard: (publish_actions)
+window.facebook.Request high score: (publish_actions)
+window.facebook.Invite
 
-Using the graph api this is a very simple task:
+//
+window.game.submitScore(leaderboardId, 5);//leaderboardId, score
+window.game.showLeaderboard(leaderboardId);
 
-	facebookConnectPlugin.api("<user-id>/?fields=id,email", ["user_birthday"],
-		function (result) {
-			alert("Result: " + JSON.stringify(result));
-			/* alerts:
-				{
-					"id": "000000123456789",
-					"email": "myemail@example.com"
-				}
-			*/
-		},
-		function (error) {
-			alert("Failed: " + error);
-		});
+//
+window.game.unlockAchievement(achievementId1);
+window.game.unlockAchievement(achievementId2);
+window.game.unlockAchievement(achievementId3);
+window.game.unlockAchievement(achievementId4);
+window.game.incrementAchievement(achievementId1, 2); //achievementId, incrementalStepOrCurrentPercent: Incremental step (android) or current percent (ios) for incremental achievement.
+window.game.incrementAchievement(achievementId2, 2);
+window.game.incrementAchievement(achievementId3, 2);
+window.game.incrementAchievement(achievementId4, 2);
+window.game.showAchievements();
+window.game.resetAchievements();//only supported on ios
 
-### Publish a Photo
-
-Send a photo to a user's feed
-
+//conditions
+window.facebook.Is logined
+window.facebook.Is showing leaderboard
+*/
 ```
-facebookConnectPlugin.showDialog( 
-    {
-        method: "feed",
-        picture:'https://www.google.co.jp/logos/doodles/2014/doodle-4-google-2014-japan-winner-5109465267306496.2-hp.png',
-        name:'Test Post',
-        message:'First photo post',    
-        caption: 'Testing using phonegap plugin',
-        description: 'Posting photo using phonegap facebook plugin'
-    }, 
-    function (response) { alert(JSON.stringify(response)) },
-    function (response) { alert(JSON.stringify(response)) });
+# Examples #
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.share-facebook/blob/master/example/index.html">example/index.html</a>
+
+# Test #
+
+```c
 ```
+
+# Useful links #
+
+Plugins For Cordova<br>
+http://cranberrygame.github.io?referrer=github
+
+# Credits #
+
+https://github.com/Wizcorp/phonegap-facebook-plugin/tree/3d52b1eb8a55ebcf8ad10c75d99deedeca0c0fdd

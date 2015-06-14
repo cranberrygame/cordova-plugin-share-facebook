@@ -44,28 +44,6 @@ import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 
-//cranberrygame start
-import android.app.Activity;
-//Util
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-class Util {
-	//ex) Util.alert(cordova.getActivity(),"message");
-	public static void alert(Activity activity, String message) {
-		AlertDialog ad = new AlertDialog.Builder(activity).create();  
-		ad.setCancelable(false); // This blocks the 'BACK' button  
-		ad.setMessage(message);  
-		ad.setButton("OK", new DialogInterface.OnClickListener() {  
-			@Override  
-			public void onClick(DialogInterface dialog, int which) {  
-				dialog.dismiss();                      
-			}  
-		});  
-		ad.show(); 		
-	}	
-}
-//cranberrygame end
-
 public class ConnectPlugin extends CordovaPlugin {
 
     private static final int INVALID_ERROR_CODE = -2; //-1 is FacebookRequestError.INVALID_ERROR_CODE
@@ -668,14 +646,13 @@ public class ConnectPlugin extends CordovaPlugin {
         };
 
         //If you're using the paging URLs they will be URLEncoded, let's decode them.
-		String[] urlParts = graphPath.split("\\?");//cranberrygame
         try {
-            urlParts[0] = URLDecoder.decode(urlParts[0], "UTF-8");//cranberrygame
+            graphPath = URLDecoder.decode(graphPath, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        //String[] urlParts = graphPath.split("\\?");//cranberrygame
+        String[] urlParts = graphPath.split("\\?");
         String graphAction = urlParts[0];
         Request graphRequest = Request.newGraphPathRequest(null, graphAction, graphCallback);
         Bundle params = graphRequest.getParameters();
@@ -688,15 +665,6 @@ public class ConnectPlugin extends CordovaPlugin {
                 if (splitPoint > 0) {
                     String key = query.substring(0, splitPoint);
                     String value = query.substring(splitPoint + 1, query.length());
-//cranberrygame start					
-					try {
-						key = URLDecoder.decode(key, "UTF-8");
-						value = URLDecoder.decode(value, "UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}					
-//cranberrygame start
-					//Util.alert(cordova.getActivity(), String.format("%s: %s", key, value));//cranberrygame
                     params.putString(key, value);
                 }
             }

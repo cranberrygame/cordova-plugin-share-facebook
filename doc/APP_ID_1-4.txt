@@ -1,0 +1,4 @@
+
+Package Name: com.cranberrygame.whackamole
+
+Default Activity Class Name: com.cranberrygame.whackamole.CordovaApp

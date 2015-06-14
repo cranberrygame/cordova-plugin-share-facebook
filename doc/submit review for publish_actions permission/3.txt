@@ -1,0 +1,39 @@
+1.Items (Notes for publish_actions)
+
+(1)Please explain how you are using publish_actions to enhance a person's in-app experience.
+
+We are using publish_actions request to post game details on user's wall automatically once user completes the game.
+So that he can inform his friends to play and have fun in this game.
+
+(2)What type of content (e.g. photos, stories) does your app share, and what button do people click to publish to Facebook? Please add detailed instructions so our review team can reproduce this permission.
+
+==> 3.Facebook Login Integration (required)
+
+2.Upload Your App (required):
+(Android App)
+(Please provide a version of your Android app for our team to review.)
+
+Upload apk whoes version is identical to app in the google play store. (caution: same as google play app)
+
+3.Facebook Login Integration (required):
+(Please provide step-by-step instructions in English that show how to access Facebook Login.)
+
+Step 1. Install apk.
+Step 2. Launch the app.
+Step 3. Tap on F (Facebook) button in home screen to log in using test user (see 1.home screen.png, 2.facebook login box.png)
+Step 4. Tap on Play button.
+Step 5. Play the game
+Step 6. After game over, game will post app detail on Facebook wall for which we need publish_actions permission. (see 3.game play.png, 4.game over.png)
+Step 7. Facebook wall screenshot after game over is uploaded for reference. (see 5.posted content.png)
+
+4.Test User(optional)
+
+Betty Amicjdfchchd Martinazzisky
+
+5.Screenshots (required)
+
+1.home screen.png
+2.facebook login box.png
+3.game play.png
+4.game over.png
+5.posted content.png

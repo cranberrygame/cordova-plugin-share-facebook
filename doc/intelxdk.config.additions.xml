@@ -1,0 +1,4 @@
+<intelxdk:plugin intelxdk:name="cordova-plugin-share-facebook" intelxdk:value="https://github.com/cranberrygame/cordova-plugin-share-facebook" intelxdk:id="cordova-plugin-share-facebook">
+	<intelxdk:param intelxdk:name="APP_ID" intelxdk:value="1388298811491111" />
+	<intelxdk:param intelxdk:name="APP_NAME" intelxdk:value="Avoid Bird" />
+</intelxdk:plugin>

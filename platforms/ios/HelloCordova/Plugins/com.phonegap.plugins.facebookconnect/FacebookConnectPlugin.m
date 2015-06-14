@@ -22,9 +22,10 @@
 @implementation FacebookConnectPlugin
 
 
-- (CDVPlugin *)initWithWebView:(UIWebView *)theWebView {
+//- (CDVPlugin *)initWithWebView:(UIWebView *)theWebView {//cranberrygame
+- (void)pluginInitialize {//fix cordova5 build issue//cranberrygame
     NSLog(@"Init FacebookConnect Session");
-    self = (FacebookConnectPlugin *)[super initWithWebView:theWebView];
+	//self = (FacebookConnectPlugin *)[super initWithWebView:theWebView];//cranberrygame
     self.userid = @"";
     
     [FBSession openActiveSessionWithReadPermissions:nil
@@ -44,7 +45,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(openURL:)
                                                  name:CDVPluginHandleOpenURLNotification object:nil];
-    return self;
+	//return self;//cranberrygame
 }
 
 - (void)openURL:(NSNotification *)notification {

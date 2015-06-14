@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        id="cordova-plugin-promotion-facebook"
-        version="0.11.0.10">
-
-    <name>Facebook Connect</name>
-
-    <description>
-      This is the official plugin for Facebook in Apache Cordova/PhoneGap!
-      
-      The Facebook plugin for Apache Cordova allows you to use the same JavaScript code in your
-      Cordova application as you use in your web application.
-      Docs: https://github.com/Wizcorp/phonegap-facebook-plugin.
-    </description>
-
-    <license>Apache 2.0</license>
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-ad-share-facebook"
+    version="0.11.0.20">
+	
+    <name>Cordova Facebook plugin</name>
+    <description>facebook login, prompt wall post, publish wall post, publish score, show leaderboard and invite.</description>
+    <author>Sang Ki Kwon (Cranberrygame)</author>		
+    <license>MIT</license>
+    <keywords>cordova,plugin,share,facebook</keywords>
+    <repo>https://github.com/cranberrygame/cordova-plugin-share-facebook</repo>
+    <issue>https://github.com/cranberrygame/cordova-plugin-share-facebook/issues</issue> 	
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>
+	
     <preference name="APP_ID" />
     <preference name="APP_NAME" />
-
-    <engines>
-        <!-- Requires > 3.3.* because of the custom Framework tag for iOS [CB-5238] -->
-        <!-- Requires > 3.5.0 because of the custom Framework tag for Android [CB-6698] -->
-        <engine name="cordova" version=">=3.5.0" />
-    </engines>
 
     <!-- JavaScript interface -->
     <js-module src="facebookConnectPlugin.js"
@@ -34,10 +27,6 @@
 
     <!-- android -->
     <platform name="android">
-<!-- cranberrygame start-->	
-		<!--dependency id="android.support.v4@1.0.0" /-->
-		<!--dependency id="android.support.v4" url="https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.dummy.android.support.v4" commit="b5e33725e6e5622cafa72b35011fe5496f11d104" /-->
-<!-- cranberrygame end-->
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FacebookConnectPlugin">
@@ -70,12 +59,6 @@
 
     <!-- ios -->
     <platform name="ios">
-<!-- cranberrygame start-->	
-		<!--dependency id="com.phonegap.plugins.facebookconnect" /-->
-		<dependency id="com.phonegap.plugins.facebookconnect" url="https://github.com/Wizcorp/phonegap-facebook-plugin" commit="d8b0f6935a7c6e586188bf85f9da88a1c160790b" />
-<!-- cranberrygame end-->
-	
-<!--	
         <config-file target="config.xml" parent="/*">
             <feature name="FacebookConnectPlugin">
                 <param name="ios-package" value="FacebookConnectPlugin"/>
@@ -110,19 +93,16 @@
             </dict>
           </array>
         </config-file>
--->
+
         <!-- Facebook framework -->
-<!--		
         <framework src="platforms/ios/FacebookSDK.framework" custom="true" />
--->		
 
         <!-- System frameworks -->
-<!--		
         <framework src="libsqlite3.dylib" />
         <framework src="Social.framework" weak="true" />
         <framework src="Accounts.framework" weak="true" />
         <framework src="Security.framework" weak="true" />
--->
+
     </platform>
 
     <!-- browser -->
