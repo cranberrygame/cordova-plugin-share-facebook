@@ -4,13 +4,14 @@ Cordova Facebook plugin
 # Overview #
 facebook login, prompt wall post, publish wall post, publish score, show leaderboard and invite.
 
-[android, ios] [crodova cli] [xdk] [cocoon]
+[android, ios] [crodova cli] [xdk] [cocoon] [phonegap build service]
 
 Requires facebook developer account https://developers.facebook.com/apps
 
 This is open source cordova plugin.
 
-You can see Plugins For Cordova in one page: http://cranberrygame.github.io?referrer=github
+You can see Cordova Plugins in one page: http://cranberrygame.github.io?referrer=github
+
 ```c
 ```
 # Change log #
@@ -19,7 +20,7 @@ You can see Plugins For Cordova in one page: http://cranberrygame.github.io?refe
 # Install plugin #
 
 ## Cordova cli ##
-https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@5.0.0
+https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@6.0.0
 ```c
 //caution: replace 1388298811491111 with your app id and Avoid Bird with your app name
 cordova plugin add cordova-plugin-share-facebook --variable APP_ID="1388298811491111" --variable APP_NAME="Avoid Bird"
@@ -34,6 +35,7 @@ https://github.com/cranberrygame/cordova-plugin-share-facebook/blob/master/doc/i
 ## Cocoon ##
 https://cocoon.io - Create project - [specific project] - Setting - Plugins - Custom - Git Url: https://github.com/cranberrygame/cordova-plugin-share-facebook.git - INSTALL - Save<br>
 //caution: replace 1388298811491111 with your app id and Avoid Bird with your app name<br>
+//caution: if APP_NAME Name parameter's Avoid Bird Value is not equal to your app name (Avoid Bird), then build error (cocoon (cordova5 build issue)).<br>
 https://cocoon.io - Create project - [specific project] - Setting - Plugins - Installed - Git Url https://github.com/cranberrygame/cordova-plugin-share-facebook.git - ADD PARAMETER - Name: APP_ID Value: 1388298811491111 - Name: APP_NAME Value: Avoid Bird - Save<br>
 <img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/cocoon_APP_ID1.png"><br>
 <img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-share-facebook/master/doc/cocoon_APP_ID2.png">
@@ -225,7 +227,7 @@ window.facebook.Is showing leaderboard
 */
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.share-facebook/blob/master/example/basic/index.html">example/basic/index.html</a>
+<a href="https://github.com/cranberrygame/cordova-plugin-share-facebook/blob/master/example/basic/index.html">example/basic/index.html</a>
 
 # Test #
 
@@ -234,7 +236,7 @@ window.facebook.Is showing leaderboard
 
 # Useful links #
 
-Plugins For Cordova<br>
+Cordova Plugins<br>
 http://cranberrygame.github.io?referrer=github
 
 # Credits #
